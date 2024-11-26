@@ -8,13 +8,13 @@ import { useNavigate } from "react-router";
 const StaffHomePage = () => {
   const { products, fetchProducts, userRole } = useProductStore();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false);  // For toggling between Add/Edit
-  const [selectedProduct, setSelectedProduct] = useState(null);  // Store selected product for edit
+  const [isEditMode, setIsEditMode] = useState(false);
+  // const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({
     product_name: "",
     product_price: "",
     product_discount: "",
-    product_image: null, // To store the uploaded image
+    product_image: null,
     sex: "",
     best_seller: false,
     featured: false,
@@ -23,11 +23,9 @@ const StaffHomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
- 
-    if(userRole === null){
-      navigate("/")
+    if (userRole === null) {
+      navigate("/");
     }
-    
   }, [userRole]);
 
   useEffect(() => {
@@ -54,56 +52,54 @@ const StaffHomePage = () => {
     }));
   };
 
-  // Handle form submission for adding/editing
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
+
     const formDataToSend = new FormData();
 
-    // Append all fields
-    Object.keys(formData).forEach((key) => {
-      if (key === "product_image" && formData[key]) {
-        formDataToSend.append(key, formData[key]); // Add image
-      } else {
-        formDataToSend.append(key, formData[key]);
-      }
-    });
+    // Append form data to send in the request
+    formDataToSend.append("product_id", formData.product_id);
+    formDataToSend.append("product_name", formData.product_name);
+    formDataToSend.append("product_price", formData.product_price);
+    formDataToSend.append("product_discount", formData.product_discount || 0);
+    formDataToSend.append("category", formData.sex);
+    formDataToSend.append("best_seller", formData.best_seller);
+    formDataToSend.append("featured", formData.featured);
+
+    // Append the image if present
+    if (formData.product_image) {
+      formDataToSend.append("product_image", formData.product_image);
+    }
 
     try {
-      if (isEditMode) {
-        // Edit product
-        await axios.put(
-          `http://localhost:3000/api/products/${selectedProduct.id}`,
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-      } else {
-        // Add new product
-        await axios.post("http://localhost:3000/api/products", formDataToSend, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      }
+      console.log(isEditMode);
+      let response = await axios.post(
+        `http://localhost:3000/api/product`,
+        formDataToSend
+      );
 
-      fetchProducts(); // Refresh product list
-      setModalOpen(false); // Close modal
-      setFormData({
-        product_name: "",
-        product_price: "",
-        product_discount: "",
-        product_image: null,
-        sex: "",
-        best_seller: false,
-        featured: false,
-      });
-      setIsEditMode(false);
-      setSelectedProduct(null);
+      // Check if the response is successful
+      if (response.status === 200 || response.status === 201) {
+        console.log("Product updated/created successfully", response.data);
+
+        setModalOpen(false); // Close modal
+        setFormData({
+          product_name: "",
+          product_price: "",
+          product_discount: "",
+          sex: "",
+          best_seller: false,
+          featured: false,
+          product_image: null,
+        });
+        fetchProducts();
+      } else {
+        throw new Error("Failed to update or create product");
+      }
     } catch (error) {
-      console.error("Error adding/editing product:", error);
+      console.error("Error updating/creating product:", error);
+      alert("Failed to update or create product");
     }
   };
 
@@ -122,6 +118,7 @@ const StaffHomePage = () => {
     setSelectedProduct(product);
     setIsEditMode(true);
     setFormData({
+      product_id:product.product_id,
       product_name: product.product_name,
       product_price: product.product_price,
       product_discount: product.product_discount,
@@ -166,10 +163,18 @@ const StaffHomePage = () => {
                   key={product.id}
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
-                  <td className="py-3 px-6 text-left">{product.product_name}</td>
-                  <td className="py-3 px-6 text-left">${product.product_price}</td>
-                  <td className="py-3 px-6 text-left uppercase">{product.sex}</td>
-                  <td className="py-3 px-6 text-left">{product.product_discount}%</td>
+                  <td className="py-3 px-6 text-left">
+                    {product.product_name}
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    ${product.product_price}
+                  </td>
+                  <td className="py-3 px-6 text-left uppercase">
+                    {product.sex}
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    {product.product_discount}%
+                  </td>
                   <td className="py-3 px-6 text-center flex justify-center space-x-4">
                     <button
                       onClick={() => handleEdit(product)}
@@ -195,7 +200,9 @@ const StaffHomePage = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96 lg:w-[700px]">
-            <h2 className="text-lg font-bold mb-4">{isEditMode ? "Edit Product" : "Add New Product"}</h2>
+            <h2 className="text-lg font-bold mb-4">
+              {isEditMode ? "Edit Product" : "Add New Product"}
+            </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700">Product Name</label>
@@ -203,6 +210,17 @@ const StaffHomePage = () => {
                   type="text"
                   name="product_name"
                   value={formData.product_name}
+                  onChange={handleInputChange}
+                  required
+                  className="border-b-2 outline-none bg-transparent py-1 w-full"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Product ID</label>
+                <input
+                  type="number"
+                  name="product_id"
+                  value={formData.product_id}
                   onChange={handleInputChange}
                   required
                   className="border-b-2 outline-none bg-transparent py-1 w-full"
@@ -254,7 +272,9 @@ const StaffHomePage = () => {
                 />
               </div>
               <div className="mb-6">
-                <label className="inline-flex items-center text-gray-700">Best Seller</label>
+                <label className="inline-flex items-center text-gray-700">
+                  Best Seller
+                </label>
                 <input
                   type="checkbox"
                   name="best_seller"
@@ -264,7 +284,9 @@ const StaffHomePage = () => {
                 />
               </div>
               <div className="mb-6">
-                <label className="inline-flex items-center text-gray-700">Featured</label>
+                <label className="inline-flex items-center text-gray-700">
+                  Featured
+                </label>
                 <input
                   type="checkbox"
                   name="featured"

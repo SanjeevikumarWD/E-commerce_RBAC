@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "../header/Header";
 import homeHero from "../../assets/home_hero.jpeg";
 import Cards from "../cards/Cards";
 import videoSource from "../../assets/home_video.mp4";
-import img from "../../assets/men.jpg";
+import men from "../../assets/images/men2.png";
+import women from "../../assets/images/women.jpg";
 import Carousel from "../carousel/Carousel";
 import Footer from "../footer/Footer";
 import Brands from "../brands/Brands";
@@ -28,7 +29,7 @@ const Home = () => {
     <div>
       <Header />
       {/* hero image */}
-      <div className="relative pt-16">
+      <div className="relative pt-16 overflow-x-hidden">
         <img
           src={homeHero}
           alt="Home Hero"
@@ -117,7 +118,7 @@ const Home = () => {
           {/* MEN */}
           <div className="relative p-3 w-full lg:w-[800px] xl:w-1/2 aspect-square lg:mx-20 xl:mx-1  overflow-hidden">
             <img
-              src={img}
+              src={men}
               alt="MEN"
               className="w-full h-full object-cover rounded-md"
             />
@@ -128,7 +129,7 @@ const Home = () => {
           {/* WOMEN */}
           <div className="relative p-3 w-full lg:w-[800px] xl:w-1/2 aspect-square lg:mx-20 xl:mx-1  overflow-hidden">
             <img
-              src={img}
+              src={women}
               alt="WOMEN"
               className="w-full h-full object-cover rounded-md"
             />

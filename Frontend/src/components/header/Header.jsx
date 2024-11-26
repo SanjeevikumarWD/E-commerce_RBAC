@@ -131,6 +131,12 @@ const Header = () => {
                 >
                   KIDS
                 </p>
+                {userRole === "MANAGER" && <p
+                  className="text-lg cursor-pointer"
+                  onClick={() => handleNavigation("/staff/store")}
+                >
+                  STOCK
+                </p>}
               </>
             ) : null}
             {userRole === "ADMIN" && (
@@ -159,6 +165,7 @@ const Header = () => {
                 >
                   SALES
                 </p>
+                
               </>
             )}
           </div>
@@ -201,6 +208,7 @@ const Header = () => {
 
             {/* Contact Dropdown */}
             <div className="relative" ref={desktopDropdownRef}>
+              
               <IoMdContact
                 className="cursor-pointer text-4xl"
                 onClick={toggleDesktopDropdown}
@@ -336,7 +344,7 @@ const Header = () => {
               <div>
                 {login && (
                   <p
-                    className="text-xl absolute bottom-0 right-16 text-white px-3 py-1 rounded-full bg-red-500"
+                    className="text-xl absolute bottom-0 right-16 text-white px-3 py-1 cursor-pointer rounded-full bg-red-500"
                     onClick={() => {
                       setLoginState({
                         loginState: false,
