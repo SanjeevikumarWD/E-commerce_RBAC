@@ -125,7 +125,7 @@ const staffSchema = new mongoose.Schema({
 
 ![Staff Dashboard](Frontend/src/assets/readmeSrc/manager_stock_view.jpg)
 
-<!-- ![Staff Dashboard - Create new product](Frontend/src/assets/readmeSrc/manager_addproduct.jpg) -->
+![Staff Dashboard - Create new product](Frontend/src/assets/readmeSrc/manager_add_new_item_view.jpg)
 
 ### Admin
 
