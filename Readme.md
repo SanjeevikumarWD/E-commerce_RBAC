@@ -74,13 +74,14 @@ An advanced **E-commerce Platform** for online dress sales, designed with robust
 
 ### **User Schema**
 Tracks user details and shopping cart information:
-
+```javascript
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
   cartArray: [mongoose.Schema.Types.ObjectId], // Array of product IDs
 });
+```
 
 ### **Product Schema**
 Defines product details for inventory:
