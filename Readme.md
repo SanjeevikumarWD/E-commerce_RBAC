@@ -1,143 +1,128 @@
-Online Dress Sales Website
-This is an Online Dress Sales Website built using the MERN stack (MongoDB, Express.js, React, Node.js) with role-based access control, allowing different types of users (Admin, Manager/Staff, and User) to interact with the site based on their permissions.
+# **Online Dress Sales Platform**
 
-Features
-Admin Role:
+An advanced **E-commerce Platform** for online dress sales, designed with robust **role-based access control (RBAC)** and built using the **MERN stack**. This platform offers seamless user experiences, secure authentication mechanisms, and administrative control over product and user management.
 
-View and manage users/staff, products, stock, and orders.
-Register staff members and make them inactive.
-Access stock details and sales data.
-Manager/Staff Role:
+---
 
-Add, edit, delete, and view products.
-Manage product listings for the website.
-User Role:
+## **Project Highlights**
 
-Create an account and login.
-Browse products, add items to the cart, and checkout.
-Tech Stack
-Frontend: React, React Router, Zustand (for global state management), Tailwind CSS
-Backend: Express.js, MongoDB (via MongoDB Atlas), JWT Authentication, Multer (for file uploads)
-Deployment: Render (for both frontend and backend)
-Database Models
-User Model
-Stores details about regular users and their carts.
+- **Role-Based Access Control**:  
+   - **Admin**: Full control over stock, users, and staff management.  
+   - **Manager/Staff**: Manage product listings (add, edit, delete).  
+   - **User**: Browse products, add items to the cart, and checkout.  
 
-javascript
-Copy code
+- **Advanced Security Implementations**:  
+   - **JWT Authentication**: Ensures secure session management and route protection.  
+   - **LocalStorage**: Safely stores session data to prevent unauthorized access.  
+   - **Restricted Account Creation**: Admin is the sole authority to create Manager/Staff accounts.  
+   - **Session Security**: If a page is refreshed, the user is automatically redirected to the homepage and logged out to prevent session hijacking.  
+   - **Account Control**: Admin can deactivate Manager/Staff accounts when necessary.
+
+- **Dynamic User Experience**:  
+   - Product browsing categorized for **men**, **women**, and **kids**.  
+   - Smooth navigation with **React Router**.  
+   - Add-to-cart and checkout functionalities for registered users.  
+
+---
+
+## **Tech Stack**
+
+- **Frontend**: React, React Router, Zustand (Global State Management), Tailwind CSS  
+- **Backend**: Express.js, Node.js, MongoDB (via MongoDB Atlas), Multer (file uploads)  
+- **Authentication**: JSON Web Tokens (JWT)  
+- **Styling**: Tailwind CSS for clean and responsive design  
+- **Deployment**: Render (for frontend and backend)  
+
+---
+
+## **Features**
+
+### **Admin Features**
+- View and manage:
+  - **Users and Staff**: Create Manager/Staff accounts and deactivate them as needed.
+  - **Stocks and Orders**: Monitor inventory and order statuses.
+  - **Sales Data**: Access detailed sales reports for business insights.
+- A dedicated **"Register Staff"** button for streamlined staff account creation.
+
+### **Manager/Staff Features**
+- Full control over product management:
+  - **Add, Edit, Delete, and View Products**: Keep the catalog updated efficiently.
+- Access to stock details to ensure inventory accuracy.
+
+### **User Features**
+- **Account Creation**: Only users can sign up and create accounts.  
+- **Secure Product Interaction**: Add items to the cart and proceed to checkout only after logging in.  
+- **Browsing Categories**: Toggle between categories like **Men**, **Women**, and **Kids**.  
+- **Session Security**: Automatic logout and redirection to the homepage upon refresh.
+
+---
+
+## **Security Highlights**
+- **JWT Authentication**:  
+  Secures all routes and ensures encrypted user sessions.  
+- **LocalStorage Implementation**:  
+  Stores user-specific session data securely.  
+- **Admin Account Management**:  
+  Prevents unauthorized access by allowing only Admin to create Manager/Staff accounts.  
+- **Session Logout on Refresh**:  
+  Enhances security by logging users out and redirecting them to the homepage if the session is invalidated.
+
+---
+
+
+## **Database Models**
+
+### **User Schema**
+Tracks user details and shopping cart information:
+
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  cartArray: [mongoose.Schema.Types.ObjectId],  // Array of product IDs
+  cartArray: [mongoose.Schema.Types.ObjectId], // Array of product IDs
 });
-Product Model
-Stores details about products listed for sale.
 
-javascript
-Copy code
+### **Product Schema**
+Defines product details for inventory:
+```javascript
 const productSchema = new mongoose.Schema({
   product_name: String,
   product_price: Number,
   product_discount: Number,
-  product_image: String,
-  sex: String,  // "men", "women", "kids"
+  product_image: String, // File path for product image
+  sex: { type: String, enum: ["men", "women", "kids"] },
   best_seller: Boolean,
   featured: Boolean,
 });
-Staff Model
-Stores staff (Manager or Admin) information.
+```
 
-javascript
-Copy code
+### **Staff Schema**
+Handles Manager and Staff account details:
+```javascript
 const staffSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  role: String, // "STAFF", "MANAGER", "ADMIN"
-  active: Boolean,
+  role: { type: String, default: "STAFF" },
+  active: { type: Boolean, default: true },
 });
-Usage
-User Flow:
-Admin: Can view users, orders, stocks, and sales. They can register staff members and make them inactive.
-Manager/Staff: Can view and manage product listings (add, edit, delete).
-User: Can create an account, add items to the cart, and proceed to checkout.
-Authentication
-Role-Based Access Control (RBAC) is implemented to ensure that only admins can create accounts for managers and staff, while users can only register themselves.
-JWT Authentication is used to protect routes and manage user sessions.
-Setup Instructions
-Clone the repository:
+```
 
-bash
-Copy code
-git clone https://github.com/yourusername/yourproject.git
-cd yourproject
-Install dependencies:
 
-For the backend:
-bash
-Copy code
-cd backend
-npm install
-For the frontend:
-bash
-Copy code
-cd frontend
-npm install
-Backend Setup:
 
-Create a .env file in the backend folder with the following variables:
-env
-Copy code
-MONGODB_URI=<your_mongodb_connection_string>
-JWT_SECRET=<your_jwt_secret>
-Run the application:
 
-For backend:
-bash
-Copy code
-cd backend
-npm start
-For frontend:
-bash
-Copy code
-cd frontend
-npm start
-Visit the website in your browser:
-http://localhost:3000
 
-Deployment Instructions
-Create a Render account at Render.
 
-Deploy Backend:
 
-Go to Render and create a New Web Service.
-Choose Node.js as the environment and connect your GitHub repository.
-Set the Build Command: npm install and Start Command: npm start.
-Set up environment variables such as MONGODB_URI and JWT_SECRET.
-Deploy Frontend:
 
-Create a New Static Site on Render, connect your frontend repository, and set the Build Command to npm run build and Publish Directory to build/.
-MongoDB Atlas:
 
-Use MongoDB Atlas for the database and configure the URI in your Render environment variables.
-Custom Domain (Optional):
 
-Configure your custom domain in Render’s settings.
-Testing
-Currently, no tests have been implemented. Future tests may include:
 
-Unit tests for the backend using Jest or Mocha.
-Component tests for the frontend using React Testing Library or Jest.
-To run tests (once implemented), you can use:
 
-bash
-Copy code
-npm test
-Contributing
-If you'd like to contribute to this project:
 
-Fork the repository.
-Create a new branch for your feature or fix.
-Open a pull request with a detailed description of your changes.
-License
+
+
+
+
+
+
