@@ -108,6 +108,33 @@ const staffSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
 });
 ```
+---
+
+## PROJECT DEMO
+
+[Download the demo video](Frontend/src/assets/readmeSrc/demo_vdo.mp4)
+
+
+## Role Based Access Controll
+
+### User 
+
+![Add To Cart](Frontend/src/assets/readmeSrc/addtocart.jpg)
+
+### Staff
+
+![Staff Dashboard](Frontend/src/assets/readmeSrc/manager_stock_view.jpg)
+
+<!-- ![Staff Dashboard - Create new product](Frontend/src/assets/readmeSrc/manager_addproduct.jpg) -->
+
+### Admin
+
+![Admin Dashboard](Frontend/src/assets/readmeSrc/admin_panel_view.jpg)
+
+![Admin Dashboard](Frontend/src/assets/readmeSrc/admin_stocks_view.jpg)
+
+![Admin Dashboard](Frontend/src/assets/readmeSrc/admin_sales_view.jpg)
+
 
 
 
