@@ -116,7 +116,10 @@ const staffSchema = new mongoose.Schema({
 
 ### Project Demo
 
-<iframe width="560" height="315" src="https://github.com/SanjeevikumarWD/E-commerce_RBAC/blob/main/Frontend/src/assets/readmeSrc/demo_vdo.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<video width="640" height="360" controls>
+  <source src="https://github.com/SanjeevikumarWD/E-commerce_RBAC/blob/main/Frontend/src/assets/readmeSrc/demo_vdo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 ## RESPONSIVENESS DEMO
