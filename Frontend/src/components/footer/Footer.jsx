@@ -83,35 +83,39 @@ const Footer = () => {
         </div>
 
         {/* Social media */}
-        <div className="flex-1 h-[200px] flex gap-3 text-4xl justify-start">
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaInstagram />
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <CiTwitter />
-          </a>
-          <a
-            href="https://youtube.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <AiOutlineYoutube />
-          </a>
-          <a
-            href="mailto:someone@example.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <IoMailOpenOutline />
-          </a>
+        <div className="flex-1 h-[200px] flex gap-3 text-4xl justify-start flex-col">
+          <h1 className="font-semibold mb-3 text-2xl">CONTACT</h1>
+
+          <div className="flex gap-6">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CiTwitter />
+            </a>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiOutlineYoutube />
+            </a>
+            <a
+              href="mailto:someone@example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IoMailOpenOutline />
+            </a>
+          </div>
         </div>
       </div>
 

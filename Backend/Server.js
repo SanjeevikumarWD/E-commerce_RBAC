@@ -5,7 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("./middleware/auth");
-const upload = require("./middleware/upload");  // Import your file upload middleware
+const upload = require("./middleware/upload");  
 
 // Models
 const User = require("./models/User");
@@ -18,9 +18,9 @@ const app = express();
 // Middleware setup
 app.use(
   cors({
-    origin: "http://localhost:5174",  // Allow frontend access from localhost:5174
-    methods: ["GET", "POST", "PUT", "DELETE"],  // Allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"],  // Allowed headers
+    origin: "http://localhost:5174",  
+    methods: ["GET", "POST", "PUT", "DELETE"],  
+    allowedHeaders: ["Content-Type", "Authorization"],  
   })
 );
 app.use(express.json());  // To parse incoming JSON requests
@@ -36,40 +36,21 @@ mongoose
 const userRoutes = require("./routes/userRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const registerRoutes = require("./routes/registerRoutes");
-const productRoutes = require("./routes/addProductsRoutes");
 
 // Routes setup
 app.use("/api/users", userRoutes);  // User-related routes
 app.use("/api/staffs", staffRoutes);  // Staff-related routes
 app.use("/api", registerRoutes);  // Register-related routes
-app.use("/api", productRoutes);  // Product-related routes
 
 // Serve uploaded files
 app.use("/uploads", express.static("uploads"));  // Static files (like images) served from /uploads
 
 // POST /api/products - Create a new product
 app.post("/api/product", upload.single("product_image"), async (req, res) => {
-  console.log("Request received on /api/products endpoint");
-
-  // Log incoming request body and file data for debugging
-  console.log("Request body:", req.body);
-  console.log("Uploaded file:", req.file);
-
   try {
     const { product_name, product_price, product_id, product_discount, category, best_seller, featured } = req.body;
 
-    // Ensure these values are being received correctly
-    console.log("Product details to save:", {
-      product_id,
-      product_name,
-      product_price,
-      product_discount,
-      category,
-      best_seller,
-      featured,
-    });
-
-    // Handle saving the product to the database
+     // Handle saving the product to the database
     const product = new Product({
       product_id,
       product_name,

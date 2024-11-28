@@ -30,9 +30,6 @@ const Home = () => {
   }, [fetchProducts, cartItems]);
 
 
-  console.log("Text from home page",userRole)
-  console.log("Text from home page",cartItems)
-
   return (
     <div>
       <Header />

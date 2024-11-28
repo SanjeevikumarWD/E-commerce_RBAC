@@ -23,7 +23,6 @@ const Header = () => {
     }
   }, [userRole, fetchCartItems]);
 
-  console.log("message from header", cartItems);
 
   const desktopDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
@@ -84,7 +83,6 @@ const Header = () => {
     };
   }, []);
 
-  console.log(userRole);
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -202,7 +200,7 @@ const Header = () => {
 
             {login && (
               <p
-                className="text-xl  text-white px-3 py-1 rounded-full bg-red-500"
+                className="text-xl  text-white px-3 py-1 rounded-full bg-red-500 cursor-pointer"
                 onClick={() => {
                   setLoginState({
                     loginState: false,
