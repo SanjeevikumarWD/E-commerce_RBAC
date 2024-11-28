@@ -111,7 +111,7 @@ const staffSchema = new mongoose.Schema({
 ---
 
 
-### Project Demo
+## PROJECT DEMO
 
 [Watch the demo](https://www.youtube.com/watch?v=0EQdY7IxfTU)
 
