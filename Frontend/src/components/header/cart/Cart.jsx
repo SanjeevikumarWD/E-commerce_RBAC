@@ -5,7 +5,7 @@ import CartCards from "../CartCards";
 import { TiTick } from "react-icons/ti";
 import imgSrc from "../../../assets/about_grp.jpg"
 
-const Cart = () => {
+const Cart = ({handleCartClicked}) => {
   const { cartItems, fetchCartItems, userId } = useProductStore();
   const navigate = useNavigate();
   const [orderSuccess, setOrderSuccess] = useState(false); // State to manage success message
@@ -26,22 +26,31 @@ const Cart = () => {
     return total + discountedPrice * (item.quantity || 1);
   }, 0);
 
+  console.log(cartItems)
+
   return (
     <div className="w-full mt-12">
       <h1 className="text-sm lg:text-lg px-5 py-3 border-y-2">MY CART</h1>
       {cartItems.length > 0 ? (
         <>
-          <div className="h-[63vh] sm:h-[50vh] lg:h-[62vh] xl:h-[67vh] overflow-y-scroll">
-            {cartItems.map((item) => (
-              <CartCards
+          <div className="h-[63vh] sm:h-[50vh] lg:h-[50vh] xl:h-[67vh] overflow-y-scroll">
+            {cartItems.map((item) => {
+              const productImageUrl = item.product_image.replace(/\\/g, "/");
+              if(!item.quantity){
+                item.quantity = 1;
+              }
+              return (
+                <CartCards
                 key={item._id}
-                imgSrc={item.product_image}
+                imgSrc={productImageUrl}
                 title={item.product_name}
                 price={item.product_price}
                 userId={userId}
+                item = {item}
                 productId={item._id}
               />
-            ))}
+              )
+             })}
           </div>
           <div className="px-5 mt-5 fixed bottom-0 bg-white w-full lg:w-[400px] xl:w-[500px]">
             <div className="flex justify-between py-3 border-y-2">
@@ -85,7 +94,10 @@ const Cart = () => {
           <p>Nothing in your Cart yet</p>
           <button
             className="mt-16 rounded-full border-2 border-black w-full mb-10 py-3"
-            onClick={() => navigate("/home")}
+            onClick={() => {
+              handleCartClicked
+              navigate("/shop")
+            }}
           >
             Continue Shopping
           </button>
@@ -96,3 +108,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

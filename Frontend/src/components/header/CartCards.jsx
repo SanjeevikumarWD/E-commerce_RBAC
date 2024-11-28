@@ -25,19 +25,21 @@ const CartCards = ({ imgSrc, title, price, userId, productId }) => {
     }
   };
 
+
+  
   return (
     <div className="flex justify-between p-4 space-x-2 border-b-2 pb-3">
       <div className="h-[100px] border-2">
-        <img src={imgSrc} alt="" className="w-full h-full" />
+        <img src={`http://localhost:3000/${imgSrc}`} alt="" className="w-full h-full" />
       </div>
       <div className="flex-1 pr-3 font-thin">
         <p className="px-2 mb-5">{title}</p>
         <div className="px-2 flex space-x-5 text-lg font-semibold">
-          <button onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}>
+          <button onClick={() => setQuantity(prev => prev + 1)}>
             -
           </button>
           <p>{quantity}</p>
-          <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
+          <button onClick={() => setQuantity(prev => prev - 1)}>+</button>
         </div>
       </div>
       <div className="flex-2 flex flex-col justify-between">

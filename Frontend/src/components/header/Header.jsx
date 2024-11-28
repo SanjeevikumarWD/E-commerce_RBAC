@@ -14,7 +14,8 @@ const Header = () => {
   const [desktopDropdownVisible, setDesktopDropdownVisible] = useState(false);
   const [mobileDropdownVisible, setMobileDropdownVisible] = useState(false);
 
-  const { login, userRole, setLoginState } = useProductStore();
+  const { login, userRole, setLoginState, cartItems } = useProductStore();
+
 
   const desktopDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
@@ -239,10 +240,11 @@ const Header = () => {
 
             {userRole === "USER" && (
               <p
-                className="cursor-pointer text-3xl"
+                className="cursor-pointer text-3xl relative"
                 onClick={handleCartClicked}
               >
                 <FaBagShopping />
+                <p className="absolute top-0 left-4 bg-red-500 text-white h-2 w-2 p-2 rounded-full flex justify-center items-center text-[9px] cursor-pointer ">{cartItems.length}</p>
               </p>
             )}
           </div>
@@ -389,11 +391,12 @@ const Header = () => {
 
             {userRole === "USER" && (
               <p
-                className="cursor-pointer text-4xl"
-                onClick={handleCartClicked}
-              >
-                <FaBagShopping />
-              </p>
+              className="cursor-pointer text-3xl relative"
+              onClick={handleCartClicked}
+            >
+              <FaBagShopping />
+              <p className="absolute top-0 left-3 bg-red-500 text-white h-2 w-2 p-3 rounded-full flex justify-center items-center text-[12px] ">0</p>
+            </p>
             )}
           </div>
         </div>
@@ -409,7 +412,7 @@ const Header = () => {
             className="bg-white w-full lg:w-[500px] h-full shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <Cart />
+            <Cart handleCartClicked={handleCartClicked}/>
             <button
               className="absolute top-4 right-4 text-xl"
               onClick={() => handleCartClicked(false)}
