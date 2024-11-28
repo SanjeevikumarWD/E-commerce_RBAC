@@ -4,8 +4,8 @@ import { FaBagShopping } from "react-icons/fa6";
 import { IoMdContact } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-// import { IoLogOut } from "react-icons/io5";
 import Cart from "../header/cart/Cart.jsx";
+import { FaCaretDown } from "react-icons/fa";
 import useProductStore from "../store/ProductStore.js";
 
 const Header = () => {
@@ -14,8 +14,16 @@ const Header = () => {
   const [desktopDropdownVisible, setDesktopDropdownVisible] = useState(false);
   const [mobileDropdownVisible, setMobileDropdownVisible] = useState(false);
 
-  const { login, userRole, setLoginState, cartItems } = useProductStore();
+  const { login, userRole, setLoginState, cartItems, fetchCartItems } =
+    useProductStore();
 
+  useEffect(() => {
+    if (userRole) {
+      fetchCartItems();
+    }
+  }, [userRole, fetchCartItems]);
+
+  console.log("message from header", cartItems);
 
   const desktopDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
@@ -101,9 +109,10 @@ const Header = () => {
               <TbMenu className="text-2xl" />
             )}
           </div>
-
-          {/* Desktop Menu */}
-          <div className="items-center space-x-6 hidden text-base xl:flex xl:text-xl font-medium">
+ 
+          <div className="hidden xl:flex justify-between items-center w-7/12 ">
+            {/* Desktop Menu */}
+          <div className="items-center space-x-6 hidden text-base xl:flex xl:text-xl  font-medium">
             {userRole === "USER" ||
             userRole === "MANAGER" ||
             userRole === null ? (
@@ -132,12 +141,14 @@ const Header = () => {
                 >
                   KIDS
                 </p>
-                {userRole === "MANAGER" && <p
-                  className="text-lg cursor-pointer"
-                  onClick={() => handleNavigation("/staff/store")}
-                >
-                  STOCK
-                </p>}
+                {userRole === "MANAGER" && (
+                  <p
+                    className="text-lg cursor-pointer"
+                    onClick={() => handleNavigation("/staff/store")}
+                  >
+                    STOCK
+                  </p>
+                )}
               </>
             ) : null}
             {userRole === "ADMIN" && (
@@ -166,7 +177,6 @@ const Header = () => {
                 >
                   SALES
                 </p>
-                
               </>
             )}
           </div>
@@ -209,7 +219,6 @@ const Header = () => {
 
             {/* Contact Dropdown */}
             <div className="relative" ref={desktopDropdownRef}>
-              
               <IoMdContact
                 className="cursor-pointer text-4xl"
                 onClick={toggleDesktopDropdown}
@@ -244,9 +253,12 @@ const Header = () => {
                 onClick={handleCartClicked}
               >
                 <FaBagShopping />
-                <p className="absolute top-0 left-4 bg-red-500 text-white h-2 w-2 p-2 rounded-full flex justify-center items-center text-[9px] cursor-pointer ">{cartItems.length}</p>
+                <p className="absolute top-0 left-4 bg-red-500 text-white h-2 w-2 p-2 rounded-full flex justify-center items-center text-[9px] cursor-pointer ">
+                  {cartItems.length}
+                </p>
               </p>
             )}
+          </div>
           </div>
         </div>
 
@@ -391,12 +403,14 @@ const Header = () => {
 
             {userRole === "USER" && (
               <p
-              className="cursor-pointer text-3xl relative"
-              onClick={handleCartClicked}
-            >
-              <FaBagShopping />
-              <p className="absolute top-0 left-3 bg-red-500 text-white h-2 w-2 p-3 rounded-full flex justify-center items-center text-[12px] ">0</p>
-            </p>
+                className="cursor-pointer text-3xl relative"
+                onClick={handleCartClicked}
+              >
+                <FaBagShopping />
+                <p className="absolute top-0 left-4 bg-red-500 text-white h-2 w-2 p-2 rounded-full flex justify-center items-center text-[9px] cursor-pointer ">
+                  {cartItems.length}
+                </p>
+              </p>
             )}
           </div>
         </div>
@@ -412,7 +426,7 @@ const Header = () => {
             className="bg-white w-full lg:w-[500px] h-full shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <Cart handleCartClicked={handleCartClicked}/>
+            <Cart handleCartClicked={handleCartClicked} />
             <button
               className="absolute top-4 right-4 text-xl"
               onClick={() => handleCartClicked(false)}

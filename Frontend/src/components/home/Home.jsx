@@ -13,17 +13,25 @@ import useProductStore from "../store/ProductStore";
 import { useNavigate } from "react-router";
 
 const Home = () => {
+  const {
+    bestSellers,
+    featuredProducts,
+    fetchProducts,
+    cartItems,
+    userRole,
+  } = useProductStore();
 
-  const {  bestSellers, featuredProducts, fetchProducts, cartItems } =
-    useProductStore();
-
-  
   const navigate = useNavigate();
+
+ 
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts,cartItems]);
+  }, [fetchProducts, cartItems]);
 
+
+  console.log("Text from home page",userRole)
+  console.log("Text from home page",cartItems)
 
   return (
     <div>
@@ -43,7 +51,10 @@ const Home = () => {
             Discover the latest trends that speak to your individuality.
             Quality, comfort, and style — all in one place.
           </p>
-          <button className="mt-4 px-6 py-2 text-xs bg-black text-white lg:text-xl" onClick={() => navigate('/shop')}>
+          <button
+            className="mt-4 px-6 py-2 text-xs bg-black text-white lg:text-xl"
+            onClick={() => navigate("/shop")}
+          >
             Shop Now
           </button>
         </div>
@@ -84,7 +95,10 @@ const Home = () => {
             seamlessly. Step into a realm of unmatched sophistication. Discover
             it today!
           </h1>
-          <button className="mt-4 text-white text-lg sm:text-xl lg:text-2xl font-semibold flex items-center gap-2 " onClick={() => navigate('/shop')}>
+          <button
+            className="mt-4 text-white text-lg sm:text-xl lg:text-2xl font-semibold flex items-center gap-2 "
+            onClick={() => navigate("/shop")}
+          >
             VISIT SHOP
             <GoArrowRight className="text-2xl sm:text-3xl lg:text-4xl font-bold" />
           </button>
@@ -108,7 +122,10 @@ const Home = () => {
           <p className="font-bold text-2xl lg:text-4xl xl:text-6xl  font-montserrat text-center lg:text-left">
             SHOP
           </p>
-          <button className="bg-blue-500 text-white px-4 py-3 rounded-sm"  onClick={() => navigate('/shop')}>
+          <button
+            className="bg-blue-500 text-white px-4 py-3 rounded-sm"
+            onClick={() => navigate("/shop")}
+          >
             VISIT SHOP
           </button>
         </div>

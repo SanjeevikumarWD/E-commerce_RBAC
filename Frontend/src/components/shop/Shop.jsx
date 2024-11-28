@@ -65,7 +65,7 @@ const About = () => {
   return (
     <div>
       <Header />
-      <div className="pt-20 lg:mx-10">
+      <div className="pt-20 ">
         <div className="text-center my-10">
           <h1 className="text-8xl font-bold p-4 lg:p-10 lg:text-5xl xl:text-6xl">
             {title}

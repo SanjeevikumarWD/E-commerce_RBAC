@@ -3,30 +3,55 @@ import useProductStore from "../../store/ProductStore";
 import { useNavigate } from "react-router-dom";
 import CartCards from "../CartCards";
 import { TiTick } from "react-icons/ti";
-import imgSrc from "../../../assets/about_grp.jpg"
+import imgSrc from "../../../assets/about_grp.jpg";
 
-const Cart = ({handleCartClicked}) => {
+const Cart = ({ handleCartClicked }) => {
   const { cartItems, fetchCartItems, userId } = useProductStore();
   const navigate = useNavigate();
-  const [orderSuccess, setOrderSuccess] = useState(false); // State to manage success message
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [quantity, setQuantity] = useState(Array(cartItems.length).fill(1));
 
-  // Fetch cart items when the component mounts
   useEffect(() => {
     fetchCartItems();
   }, [fetchCartItems]);
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      setQuantity(Array(cartItems.length).fill(1));
+    }
+  }, [cartItems]);
+
+  const handleIncrement = (index) => {
+    setQuantity((prev) => {
+      const updated = [...prev];
+      updated[index] = (updated[index] || 1) + 1; // Default to 1 if undefined
+      return updated;
+    });
+  };
+
+  const handleDecrement = (index) => {
+    setQuantity((prev) => {
+      const updated = [...prev];
+      updated[index] = Math.max((updated[index] || 1) - 1, 1); // Prevent quantity < 1
+      return updated;
+    });
+  };
+
+  const subtotal = cartItems.reduce((total, item, index) => {
+    const discountedPrice = item.product_price * (1 - item.product_discount / 100);
+    const itemQuantity = quantity[index] || 1;
+    return total + discountedPrice * itemQuantity;
+  }, 0);
+
+  if (!cartItems || !quantity) return <div>Loading...</div>;
+
 
   const handleCheckout = () => {
     setOrderSuccess(true); // Show success message
     setTimeout(() => setOrderSuccess(false), 2000); // Hide after 3 seconds
   };
 
-  const subtotal = cartItems.reduce((total, item) => {
-    const discountedPrice =
-      item.product_price * (1 - item.product_discount / 100);
-    return total + discountedPrice * (item.quantity || 1);
-  }, 0);
-
-  console.log(cartItems)
+  console.log(cartItems);
 
   return (
     <div className="w-full mt-12">
@@ -34,23 +59,26 @@ const Cart = ({handleCartClicked}) => {
       {cartItems.length > 0 ? (
         <>
           <div className="h-[63vh] sm:h-[50vh] lg:h-[50vh] xl:h-[67vh] overflow-y-scroll">
-            {cartItems.map((item) => {
+            {cartItems.map((item, index) => {
               const productImageUrl = item.product_image.replace(/\\/g, "/");
-              if(!item.quantity){
+              if (!item.quantity) {
                 item.quantity = 1;
               }
               return (
                 <CartCards
-                key={item._id}
-                imgSrc={productImageUrl}
-                title={item.product_name}
-                price={item.product_price}
-                userId={userId}
-                item = {item}
-                productId={item._id}
-              />
-              )
-             })}
+                  key={item._id}
+                  imgSrc={productImageUrl}
+                  title={item.product_name}
+                  price={item.product_price}
+                  userId={userId}
+                  item={item}
+                  productId={item._id}
+                  quantity={quantity[index]}
+                  increment={() => handleIncrement(index)}
+                  decrement={() => handleDecrement(index)}
+                />
+              );
+            })}
           </div>
           <div className="px-5 mt-5 fixed bottom-0 bg-white w-full lg:w-[400px] xl:w-[500px]">
             <div className="flex justify-between py-3 border-y-2">
@@ -82,9 +110,12 @@ const Cart = ({handleCartClicked}) => {
                   This is a dummy website order page.
                 </p>
                 <div className=" my-3 flex justify-center items-center ">
-                  <img src={imgSrc} alt="img" className="w-full h-[100px] lg:h-[200px] object-cover" />
+                  <img
+                    src={imgSrc}
+                    alt="img"
+                    className="w-full h-[100px] lg:h-[200px] object-cover"
+                  />
                 </div>
-                
               </div>
             </div>
           )}
@@ -95,8 +126,8 @@ const Cart = ({handleCartClicked}) => {
           <button
             className="mt-16 rounded-full border-2 border-black w-full mb-10 py-3"
             onClick={() => {
-              handleCartClicked
-              navigate("/shop")
+              handleCartClicked;
+              navigate("/shop");
             }}
           >
             Continue Shopping
@@ -108,4 +139,3 @@ const Cart = ({handleCartClicked}) => {
 };
 
 export default Cart;
-

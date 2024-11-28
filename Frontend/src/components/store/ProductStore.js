@@ -14,7 +14,6 @@ const useProductStore = create((set, get) => ({
   featuredProducts: [],
   cartItems: [],
 
-
   fetchProducts: async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/products");
@@ -48,7 +47,7 @@ const useProductStore = create((set, get) => ({
         params: { userId },
       });
 
-      set({ cartItems: response.data }); 
+      set({ cartItems: response.data });
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -71,23 +70,16 @@ const useProductStore = create((set, get) => ({
   fetchStaffs: async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/staffs");
-      const staffs = response.data
-      set({staffs});
-      console.log("Fetched staffs:", staffs)
+      const staffs = response.data;
+      set({ staffs });
+      console.log("Fetched staffs:", staffs);
     } catch (error) {
       console.error("Error fetching users:", error);
-
     }
   },
 
   setLoginState: ({ loginState, token, userId, userRole }) => {
     set({ login: loginState, token, userId, userRole });
-    console.log("Login state updated from product store:", {
-      loginState,
-      token,
-      userId,
-      userRole,
-    });
   },
 
   setCartItems: (newCartItems) => {

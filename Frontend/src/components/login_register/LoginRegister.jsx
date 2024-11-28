@@ -41,11 +41,9 @@ const LoginRegister = () => {
         userRole: role,
       });
 
-      console.log("text from loginregister",user)
 
       localStorage.setItem("token", token);
 
-      console.log(role)
       
       // this is to navigate home page based on role
       if (role === "ADMIN") {
@@ -55,6 +53,8 @@ const LoginRegister = () => {
       } else {
         navigate("/");
       }
+
+
     } catch (error) {
       if (error.response && error.response.data) {
         setError(error.response.data.error || "Login failed.");
@@ -66,7 +66,7 @@ const LoginRegister = () => {
   };
 
   return (
-    <div>
+    <div >
       <Header />
       <div className="mt-20 w-[400px] sm:w-[425px] mx-auto lg:w-full lg:max-w-[900px]">
         <div className="lg:flex lg:gap-8">

@@ -74,7 +74,7 @@ const Cards = ({ value }) => {
   };
 
   return (
-    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 p-4 w-screen ">
+    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 p-10 w-screen ">
       {data.map((product) => {
         const productImageUrl = product.product_image.replace(/\\/g, "/");
         return (

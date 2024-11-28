@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useProductStore from "../store/ProductStore";
 
-const CartCards = ({ imgSrc, title, price, userId, productId }) => {
-  const [quantity, setQuantity] = useState(1);
+const CartCards = ({ imgSrc, title, price, userId, productId, quantity, increment, decrement }) => {
   const { fetchCartItems } = useProductStore();
 
   const handleDelete = async () => {
@@ -35,11 +34,11 @@ const CartCards = ({ imgSrc, title, price, userId, productId }) => {
       <div className="flex-1 pr-3 font-thin">
         <p className="px-2 mb-5">{title}</p>
         <div className="px-2 flex space-x-5 text-lg font-semibold">
-          <button onClick={() => setQuantity(prev => prev + 1)}>
+          <button onClick={decrement}>
             -
           </button>
           <p>{quantity}</p>
-          <button onClick={() => setQuantity(prev => prev - 1)}>+</button>
+          <button onClick={increment}>+</button>
         </div>
       </div>
       <div className="flex-2 flex flex-col justify-between">
