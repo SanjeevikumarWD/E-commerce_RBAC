@@ -114,6 +114,10 @@ const staffSchema = new mongoose.Schema({
 
 [Download the demo video](Frontend/src/assets/readmeSrc/demo_vdo.mp4)
 
+## RESPONSIVENESS DEMO
+
+[Download the demo video](Frontend/src/assets/readmeSrc/Responsive.mp4)
+
 
 ## Role Based Access Controll
 
