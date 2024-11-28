@@ -114,6 +114,11 @@ const staffSchema = new mongoose.Schema({
 
 [Download the demo video](Frontend/src/assets/readmeSrc/demo_vdo.mp4)
 
+### Project Demo
+
+<iframe width="560" height="315" src="https://github.com/SanjeevikumarWD/E-commerce_RBAC/blob/main/Frontend/src/assets/readmeSrc/demo_vdo.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## RESPONSIVENESS DEMO
 
 [Download the demo video](Frontend/src/assets/readmeSrc/Responsive.mp4)
