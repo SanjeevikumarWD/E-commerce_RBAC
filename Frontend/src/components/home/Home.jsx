@@ -54,10 +54,10 @@ const Home = () => {
 
       {/* best seller */}
       <div className="text-left my-24">
-        <p className="font-bold text-2xl lg:text-4xl xl:text-6xl font-montserrat text-left pl-[50px] sm:pl-[220px] lg:pl-[200px] xl:pl-[70px]">
+        <p className="font-bold text-2xl lg:text-4xl xl:text-6xl font-montserrat text-left pl-[15px] ">
           BEST SELLER
         </p>
-        <div className="xl:flex my-10">
+        <div className="xl:flex my-10 ">
           {bestSellers.length > 0 && <Cards value={bestSellers} />}
         </div>
       </div>
@@ -93,7 +93,7 @@ const Home = () => {
 
       {/* Featured */}
       <div className="text-center my-24">
-        <p className="font-bold text-2xl lg:text-4xl xl:text-6xl font-montserrat text-left pl-[50px] sm:pl-[220px] lg:pl-[200px] xl:pl-[70px]">
+        <p className="font-bold text-2xl lg:text-4xl xl:text-6xl font-montserrat text-left pl-[15px]">
           FEATURED
         </p>
         <div className="xl:flex my-10">

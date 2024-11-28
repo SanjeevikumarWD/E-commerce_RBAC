@@ -74,7 +74,7 @@ const Cards = ({ value }) => {
   };
 
   return (
-    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-4 w-screen ">
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 p-4 w-screen ">
       {data.map((product) => {
         const productImageUrl = product.product_image.replace(/\\/g, "/");
         return (
@@ -84,7 +84,7 @@ const Cards = ({ value }) => {
             onClick={() => handleCardClick(product._id)}
           >
             {/* Image Container */}
-            <div className="relative w-full h-[500px] ">
+            <div className="relative  h-[500px] lg:h-[px] ">
               <img
                 src={`http://localhost:3000/${productImageUrl}`}
                 alt={product.product_name}
