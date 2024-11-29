@@ -75,7 +75,7 @@ const StaffHomePage = () => {
     try {
       console.log(isEditMode);
       let response = await axios.post(
-        `https://e-commerce-rbac-backend.onrender.com/api/product`,
+        `http://localhost:3000/api/product`,
         formDataToSend
       );
 
@@ -106,7 +106,7 @@ const StaffHomePage = () => {
   // Handle delete product
   const handleDelete = async (productId) => {
     try {
-      await axios.delete(`https://e-commerce-rbac-backend.onrender.com/api/products/${productId}`);
+      await axios.delete(`http://localhost:3000/api/products/${productId}`);
       fetchProducts(); // Refresh product list
     } catch (error) {
       console.error("Error deleting product:", error);

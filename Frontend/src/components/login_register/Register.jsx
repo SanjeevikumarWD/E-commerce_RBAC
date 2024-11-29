@@ -40,8 +40,8 @@ const Register = () => {
     }
 
     const route = isAdminRoute
-      ? "https://e-commerce-rbac-backend.onrender.com/api/admin/register"
-      : "https://e-commerce-rbac-backend.onrender.com/api/register";
+      ? "http://localhost:3000/api/admin/register"
+      : "http://localhost:3000/api/register";
     console.log(route);
     // Prepare the request payload
     const data = {

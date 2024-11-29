@@ -26,7 +26,7 @@ const LoginRegister = () => {
   const handleLogin = async () => {
     setError(""); // Clear previous error
     try {
-      const response = await axios.post("https://e-commerce-rbac-backend.onrender.com/api/login", {
+      const response = await axios.post("http://localhost:3000/api/login", {
         email,
         password,
         role,
