@@ -14,7 +14,7 @@ const Cards = ({ value }) => {
 
   const fetchCartItems = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/cart`, {
+      const response = await axios.get(`https://e-commerce-rbac-backend.onrender.com/api/cart`, {
         params: { userId },
       });
       setCartItems(response.data);
@@ -30,7 +30,7 @@ const Cards = ({ value }) => {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/cart", {
+      await axios.post("https://e-commerce-rbac-backend.onrender.com/api/cart", {
         userId,
         productId,
       });
@@ -86,7 +86,7 @@ const Cards = ({ value }) => {
             {/* Image Container */}
             <div className="relative  h-[500px] lg:h-[px] ">
               <img
-                src={`http://localhost:3000/${productImageUrl}`}
+                src={`https://e-commerce-rbac-backend.onrender.com/${productImageUrl}`}
                 alt={product.product_name}
                 className="w-full h-full object-cover"
               />

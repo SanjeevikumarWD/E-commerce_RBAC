@@ -27,7 +27,7 @@ const Users = () => {
   const toggleActiveStatus = async (id) => {
     console.log(id)
     try {
-      const response = await axios.put(`http://localhost:3000/api/staff/toggle-active/${id}`);
+      const response = await axios.put(`https://e-commerce-rbac-backend.onrender.com/api/staff/toggle-active/${id}`);
       if (response.status === 200) {
         console.log(`Toggled active status for user with ID: ${id}`);
         fetchStaffs(); // Refresh the staff list after toggling
