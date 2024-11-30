@@ -49,6 +49,7 @@ An advanced **E-commerce Platform** for online dress sales, designed with robust
   - **Add, Edit, Delete, and View Products**: Keep the catalog updated efficiently.
 - Access to stock details to ensure inventory accuracy.
 
+
 ### **User Features**
 - **Account Creation**: Only users can sign up and create accounts.  
 - **Secure Product Interaction**: Add items to the cart and proceed to checkout only after logging in.  
