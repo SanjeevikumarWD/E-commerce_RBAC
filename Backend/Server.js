@@ -5,7 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("./middleware/auth");
-const upload = require("./middleware/upload");  
+const upload = require("./middleware/upload");
 
 // Models
 const User = require("./models/User");
@@ -16,14 +16,8 @@ const Product = require("./models/Product");
 const app = express();
 
 // Middleware setup
-app.use(
-  cors({
-    origin: "http://localhost:5174",  
-    methods: ["GET", "POST", "PUT", "DELETE"],  
-    allowedHeaders: ["Content-Type", "Authorization"],  
-  })
-);
-app.use(express.json());  // To parse incoming JSON requests
+app.use(cors());
+app.use(express.json()); // To parse incoming JSON requests
 
 // MongoDB connection
 const mongoURI = process.env.MONGO_URI;
@@ -38,26 +32,34 @@ const staffRoutes = require("./routes/staffRoutes");
 const registerRoutes = require("./routes/registerRoutes");
 
 // Routes setup
-app.use("/api/users", userRoutes);  // User-related routes
-app.use("/api/staffs", staffRoutes);  // Staff-related routes
-app.use("/api", registerRoutes);  // Register-related routes
+app.use("/api/users", userRoutes); // User-related routes
+app.use("/api/staffs", staffRoutes); // Staff-related routes
+app.use("/api", registerRoutes); // Register-related routes
 
 // Serve uploaded files
-app.use("/uploads", express.static("uploads"));  // Static files (like images) served from /uploads
+app.use("/uploads", express.static("uploads")); // Static files (like images) served from /uploads
 
 // POST /api/products - Create a new product
 app.post("/api/product", upload.single("product_image"), async (req, res) => {
   try {
-    const { product_name, product_price, product_id, product_discount, category, best_seller, featured } = req.body;
+    const {
+      product_name,
+      product_price,
+      product_id,
+      product_discount,
+      category,
+      best_seller,
+      featured,
+    } = req.body;
 
-     // Handle saving the product to the database
+    // Handle saving the product to the database
     const product = new Product({
       product_id,
       product_name,
       product_price,
       product_discount,
       product_image: req.file ? req.file.path : null, // Handle product image upload
-      sex:category,
+      sex: category,
       best_seller: best_seller === "true", // Convert to boolean
       featured: featured === "true", // Convert to boolean
     });
@@ -71,12 +73,11 @@ app.post("/api/product", upload.single("product_image"), async (req, res) => {
   }
 });
 
-
 // Get all products
 app.get("/api/products", async (req, res) => {
   try {
-    const products = await Product.find();  // Fetch all products from DB
-    res.json(products);  // Return the products as JSON
+    const products = await Product.find(); // Fetch all products from DB
+    res.json(products); // Return the products as JSON
   } catch (error) {
     res.status(500).send("Error retrieving products: " + error.message);
   }
@@ -84,7 +85,9 @@ app.get("/api/products", async (req, res) => {
 
 // JWT token verification route (protected route example)
 app.get("/api/protected", authenticateToken, (req, res) => {
-  res.status(200).json({ message: "This is a protected route", user: req.user });
+  res
+    .status(200)
+    .json({ message: "This is a protected route", user: req.user });
 });
 
 // Login Route (with role-based authentication)
@@ -105,20 +108,31 @@ app.post("/api/login", async (req, res) => {
     } else if (role === "MANAGER") {
       user = await Staff.findOne({ email });
       if (!user) return res.status(404).json({ error: "Staff Not Found" });
-      if (!user.active) return res.status(403).json({ error: "Your account is inactive. Please contact the admin." });
+      if (!user.active)
+        return res
+          .status(403)
+          .json({
+            error: "Your account is inactive. Please contact the admin.",
+          });
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) return res.status(401).json({ error: "Invalid Password" });
+      if (!isPasswordValid)
+        return res.status(401).json({ error: "Invalid Password" });
     } else {
       user = await User.findOne({ email });
       if (!user) return res.status(404).json({ error: "User Not Found" });
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) return res.status(401).json({ error: "Invalid Password" });
+      if (!isPasswordValid)
+        return res.status(401).json({ error: "Invalid Password" });
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: user.id, email: user.email, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({ message: `${role} login successful`, user, token });
   } catch (error) {
@@ -138,7 +152,9 @@ app.post("/api/cart", async (req, res) => {
     if (!user.cartArray.includes(productId)) {
       user.cartArray.push(productId);
       await user.save();
-      return res.status(200).send({ success: true, message: "Added", data: user.cartArray });
+      return res
+        .status(200)
+        .send({ success: true, message: "Added", data: user.cartArray });
     } else {
       return res.status(400).send("Product already in cart");
     }
@@ -154,7 +170,7 @@ app.get("/api/cart", async (req, res) => {
     const user = await User.findById(userId).populate("cartArray"); // Populate cart array with full product details
     if (!user) return res.status(404).send("User not found");
 
-    res.status(200).json(user.cartArray);  // Return populated cart items
+    res.status(200).json(user.cartArray); // Return populated cart items
   } catch (error) {
     res.status(500).send("Error fetching cart items: " + error.message);
   }
@@ -166,14 +182,14 @@ app.delete("/api/cart/remove", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       userId,
-      { $pull: { cartArray: productId } },  // Remove product from cart
-      { new: true }  // Return updated user document
+      { $pull: { cartArray: productId } }, // Remove product from cart
+      { new: true } // Return updated user document
     );
 
     if (!user) return res.status(404).send("User not found");
 
     res.status(200).send({ success: true, cart: user.cartArray });
-  } catch (error) { 
+  } catch (error) {
     res.status(500).send("Error removing product from cart: " + error.message);
   }
 });
@@ -183,13 +199,13 @@ app.put(`/api/staff/toggle-active/:id`, async (req, res) => {
   const { id } = req.params;
   try {
     const staff = await Staff.findById(id);
-    if (!staff) return res.status(404).json({ message: 'Staff not found' });
+    if (!staff) return res.status(404).json({ message: "Staff not found" });
 
-    staff.active = !staff.active;  // Toggle active status
+    staff.active = !staff.active; // Toggle active status
     await staff.save();
-    res.status(200).json({ message: 'Active status updated' });
+    res.status(200).json({ message: "Active status updated" });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating staff status' });
+    res.status(500).json({ message: "Error updating staff status" });
   }
 });
 
