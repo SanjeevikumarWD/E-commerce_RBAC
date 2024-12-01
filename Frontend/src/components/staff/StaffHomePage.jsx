@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const StaffHomePage = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const { products, fetchProducts, userRole } = useProductStore();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -75,7 +76,7 @@ const StaffHomePage = () => {
     try {
       console.log(isEditMode);
       let response = await axios.post(
-        `http://localhost:3000/api/product`,
+        `${API_URL}/api/product`,
         formDataToSend
       );
 
@@ -106,7 +107,7 @@ const StaffHomePage = () => {
   // Handle delete product
   const handleDelete = async (productId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/products/${productId}`);
+      await axios.delete(`${API_URL}/api/products/${productId}`);
       fetchProducts(); // Refresh product list
     } catch (error) {
       console.error("Error deleting product:", error);

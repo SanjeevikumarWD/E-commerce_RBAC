@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import useProductStore from "../store/ProductStore";
 
 const Register = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -40,8 +42,8 @@ const Register = () => {
     }
 
     const route = isAdminRoute
-      ? "http://localhost:3000/api/admin/register"
-      : "http://localhost:3000/api/register";
+      ? `${API_URL}/api/admin/register`
+      : `${API_URL}/api/register`;
     console.log(route);
     // Prepare the request payload
     const data = {

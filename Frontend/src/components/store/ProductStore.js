@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const useProductStore = create((set, get) => ({
+  
   login: false,
   token: null,
   userId: null,
@@ -16,7 +20,7 @@ const useProductStore = create((set, get) => ({
 
   fetchProducts: async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/products");
+      const response = await axios.get(`${API_URL}/api/products`);
       const products = response.data;
       set({
         products,
@@ -43,7 +47,7 @@ const useProductStore = create((set, get) => ({
         return;
       }
 
-      const response = await axios.get("http://localhost:3000/api/cart", {
+      const response = await axios.get(`${API_URL}/api/cart`, {
         params: { userId },
       });
 
@@ -56,7 +60,7 @@ const useProductStore = create((set, get) => ({
   // Fetch all users from the database
   fetchUsers: async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/users");
+      const response = await axios.get(`${API_URL}/api/users`);
       const users = response.data;
 
       set({ users });
@@ -69,7 +73,7 @@ const useProductStore = create((set, get) => ({
   //Fetch all staffs from the databse
   fetchStaffs: async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/staffs");
+      const response = await axios.get(`${API_URL}/api/staffs`);
       const staffs = response.data;
       set({ staffs });
       console.log("Fetched staffs:", staffs);

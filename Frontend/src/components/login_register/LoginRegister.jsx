@@ -13,6 +13,8 @@ const LoginRegister = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const role = location.state?.Role || "USER";
+  const API_URL = process.env.REACT_APP_API_URL;
+
 
   const handleCreateAccount = () => {
     if (role === "USER") {
@@ -26,7 +28,7 @@ const LoginRegister = () => {
   const handleLogin = async () => {
     setError(""); // Clear previous error
     try {
-      const response = await axios.post("http://localhost:3000/api/login", {
+      const response = await axios.post(`${API_URL}/api/login`, {
         email,
         password,
         role,
