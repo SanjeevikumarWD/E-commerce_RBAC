@@ -136,7 +136,9 @@ const Home = () => {
               alt="MEN"
               className="w-full h-full object-cover rounded-md"
             />
-            <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest">
+            <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest"
+            onClick={() => navigate("/men")}
+            >
               MEN
             </p>
           </div>
@@ -147,7 +149,9 @@ const Home = () => {
               alt="WOMEN"
               className="w-full h-full object-cover rounded-md"
             />
-            <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest">
+            <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest"
+            onClick={() => navigate("/women")}
+            >
               WOMEN
             </p>
           </div>
