@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 
 const useProductStore = create((set, get) => ({
   
@@ -20,7 +18,7 @@ const useProductStore = create((set, get) => ({
 
   fetchProducts: async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/products`);
+      const response = await axios.get(`https://backend-cjms.onrender.com/api/products`);
       const products = response.data;
       set({
         products,
@@ -47,7 +45,7 @@ const useProductStore = create((set, get) => ({
         return;
       }
 
-      const response = await axios.get(`${API_URL}/api/cart`, {
+      const response = await axios.get(`https://backend-cjms.onrender.com/api/cart`, {
         params: { userId },
       });
 
@@ -60,7 +58,7 @@ const useProductStore = create((set, get) => ({
   // Fetch all users from the database
   fetchUsers: async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/users`);
+      const response = await axios.get(`https://backend-cjms.onrender.com/api/users`);
       const users = response.data;
 
       set({ users });
@@ -73,7 +71,7 @@ const useProductStore = create((set, get) => ({
   //Fetch all staffs from the databse
   fetchStaffs: async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/staffs`);
+      const response = await axios.get(`https://backend-cjms.onrender.com/api/staffs`);
       const staffs = response.data;
       set({ staffs });
       console.log("Fetched staffs:", staffs);

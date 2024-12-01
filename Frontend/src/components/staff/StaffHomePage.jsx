@@ -76,7 +76,7 @@ const StaffHomePage = () => {
     try {
       console.log(isEditMode);
       let response = await axios.post(
-        `${API_URL}/api/product`,
+        `https://backend-cjms.onrender.com/api/product`,
         formDataToSend
       );
 
@@ -107,7 +107,7 @@ const StaffHomePage = () => {
   // Handle delete product
   const handleDelete = async (productId) => {
     try {
-      await axios.delete(`${API_URL}/api/products/${productId}`);
+      await axios.delete(`https://backend-cjms.onrender.com/api/products/${productId}`);
       fetchProducts(); // Refresh product list
     } catch (error) {
       console.error("Error deleting product:", error);

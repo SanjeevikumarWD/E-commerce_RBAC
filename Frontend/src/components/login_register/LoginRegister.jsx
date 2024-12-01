@@ -13,7 +13,6 @@ const LoginRegister = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const role = location.state?.Role || "USER";
-  const API_URL = process.env.REACT_APP_API_URL;
 
 
   const handleCreateAccount = () => {
@@ -28,7 +27,7 @@ const LoginRegister = () => {
   const handleLogin = async () => {
     setError(""); // Clear previous error
     try {
-      const response = await axios.post(`${API_URL}/api/login`, {
+      const response = await axios.post(`https://backend-cjms.onrender.com/api/login`, {
         email,
         password,
         role,

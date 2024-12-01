@@ -42,8 +42,8 @@ const Register = () => {
     }
 
     const route = isAdminRoute
-      ? `${API_URL}/api/admin/register`
-      : `${API_URL}/api/register`;
+      ? `https://backend-cjms.onrender.com/api/admin/register`
+      : `https://backend-cjms.onrender.com/api/register`;
     console.log(route);
     // Prepare the request payload
     const data = {
