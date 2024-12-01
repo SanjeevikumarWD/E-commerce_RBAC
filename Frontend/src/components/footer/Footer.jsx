@@ -53,7 +53,7 @@ const Footer = () => {
           </p>
           <p
             className="tracking-wider text-xl font-thin cursor-pointer"
-            onClick={() => handleNavigation("bottom")}
+            onClick={() => handleNavigation("/shop")}
           >
             Contact
           </p>
