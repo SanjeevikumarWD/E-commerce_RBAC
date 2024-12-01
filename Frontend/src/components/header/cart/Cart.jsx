@@ -51,8 +51,6 @@ const Cart = ({ handleCartClicked }) => {
     setTimeout(() => setOrderSuccess(false), 2000); // Hide after 3 seconds
   };
 
-  console.log(cartItems);
-
   return (
     <div className="w-full mt-12">
       <h1 className="text-sm lg:text-lg px-5 py-3 border-y-2">MY CART</h1>

@@ -25,7 +25,6 @@ const Users = () => {
   }, [fetchUsers, fetchStaffs]);
 
   const toggleActiveStatus = async (id) => {
-    console.log(id)
     try {
       const response = await axios.put(`http://localhost:3000/api/staff/toggle-active/${id}`);
       if (response.status === 200) {
