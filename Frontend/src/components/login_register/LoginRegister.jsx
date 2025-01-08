@@ -6,6 +6,8 @@ import axios from "axios";
 import useProductStore from "../store/ProductStore";
 
 const LoginRegister = () => {
+  const api_url = import.meta.env.VITE_API_URL;
+
   const { setLoginState } = useProductStore();
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ const LoginRegister = () => {
   const handleLogin = async () => {
     setError(""); // Clear previous error
     try {
-      const response = await axios.post(`https://backend-cjms.onrender.com/api/login`, {
+      const response = await axios.post(`${api_url}/api/login`, {
         email,
         password,
         role,
@@ -123,7 +125,7 @@ const LoginRegister = () => {
             <h1 className="py-5 font-regular text-[18px]">Create an account</h1>
             <p className="text-[12px] pb-14">
               Don't have an account?
-              <a href="/register" className="text-blue-600 hover:underline">
+              <a href="/register" className="text-blue-600 hover:underline" onClick={handleCreateAccount}>
                 Create Account
               </a>
             </p>

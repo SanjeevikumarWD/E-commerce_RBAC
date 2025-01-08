@@ -5,6 +5,8 @@ import axios from "axios";
 import { FaCheck } from "react-icons/fa";
 
 const Cards = ({ value }) => {
+  const api_url = import.meta.env.VITE_API_URL;
+
   const { products, login, setCartItems, userId, userRole } = useProductStore();
   const [cartMessage, setCartMessage] = useState({});
   const [activeCard, setActiveCard] = useState(null); // State to track active card
@@ -12,9 +14,10 @@ const Cards = ({ value }) => {
 
   const navigate = useNavigate();
 
+
   const fetchCartItems = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/cart`, {
+      const response = await axios.get(`${api_url}/api/cart`, {
         params: { userId },
       });
       setCartItems(response.data);
@@ -30,7 +33,7 @@ const Cards = ({ value }) => {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/cart", {
+      await axios.post(`${api_url}/api/cart`, {
         userId,
         productId,
       });
@@ -76,17 +79,16 @@ const Cards = ({ value }) => {
   return (
     <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 p-10 w-screen ">
       {data.map((product) => {
-        const productImageUrl = product.product_image.replace(/\\/g, "/");
         return (
           <div
             key={product._id}
-            className="bg-white rounded-lg overflow-hidden  transition-all duration-300"
+            className="bg-white rounded-lg overflow-hidden shadow-sm hovershadow-lg transition-all duration-300"
             onClick={() => handleCardClick(product._id)}
           >
             {/* Image Container */}
             <div className="relative  h-[500px] lg:h-[px] ">
               <img
-                src={`http://localhost:3000/${productImageUrl}`}
+                src={product.product_image}
                 alt={product.product_name}
                 className="w-full h-full object-cover"
               />

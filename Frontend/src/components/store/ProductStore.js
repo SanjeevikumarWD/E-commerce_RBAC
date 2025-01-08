@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const api_url = import.meta.env.VITE_API_URL;
 
 const useProductStore = create((set, get) => ({
-  
-  login: false,
-  token: null,
-  userId: null,
-  userRole: null,
+  login: localStorage.getItem("token") ? true : false,
+  token: localStorage.getItem("token"),
+  userId: localStorage.getItem("userId") || null,
+  userRole: localStorage.getItem("userRole") || null,
   products: [],
   menProducts: [],
   womenProducts: [],
@@ -16,9 +16,13 @@ const useProductStore = create((set, get) => ({
   featuredProducts: [],
   cartItems: [],
 
+
+
   fetchProducts: async () => {
     try {
-      const response = await axios.get(`https://backend-cjms.onrender.com/api/products`);
+      const response = await axios.get(
+        `${api_url}/api/getall`
+      );
       const products = response.data;
       set({
         products,
@@ -45,9 +49,14 @@ const useProductStore = create((set, get) => ({
         return;
       }
 
-      const response = await axios.get(`https://backend-cjms.onrender.com/api/cart`, {
-        params: { userId },
-      });
+      const response = await axios.get(
+        `${api_url}/api/cart`,
+        {
+          params: { userId },
+        }
+      );
+
+      localStorage.setItem("cartItems", JSON.stringify(response.data));
 
       set({ cartItems: response.data });
     } catch (error) {
@@ -58,11 +67,13 @@ const useProductStore = create((set, get) => ({
   // Fetch all users from the database
   fetchUsers: async () => {
     try {
-      const response = await axios.get(`https://backend-cjms.onrender.com/api/users`);
+      const response = await axios.get(
+        `${api_url}/api/users`
+      );
       const users = response.data;
 
+      localStorage.setItem("users", JSON.stringify(users));
       set({ users });
-      console.log("Fetched users:", users);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -71,16 +82,30 @@ const useProductStore = create((set, get) => ({
   //Fetch all staffs from the databse
   fetchStaffs: async () => {
     try {
-      const response = await axios.get(`https://backend-cjms.onrender.com/api/staffs`);
+      const response = await axios.get(
+        `${api_url}/api/staffs`
+      );
       const staffs = response.data;
       set({ staffs });
-      console.log("Fetched staffs:", staffs);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   },
 
   setLoginState: ({ loginState, token, userId, userRole }) => {
+    // Store token and user data in localStorage
+    if (loginState) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("userRole", userRole);
+    } else {
+      // Remove token and user data from localStorage on logout
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("cartItems");
+    }
+
     set({ login: loginState, token, userId, userRole });
   },
 

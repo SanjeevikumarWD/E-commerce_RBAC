@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import useProductStore from "../store/ProductStore";
 
 const Register = () => {
-  const API_URL = process.env.REACT_APP_API_URL;
+  const api_url = import.meta.env.VITE_API_URL;
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,13 +18,13 @@ const Register = () => {
     confirmPassword: "",
   });
 
-  const {userRole} =useProductStore();
-  
+  const { userRole } = useProductStore();
+
   const [message, setMessage] = useState("");
   const location = useLocation();
-  
+
   const isAdminRoute = location.pathname.includes("/admin/register");
-  
+
   const navigate = useNavigate();
 
   const handleInput = (e) => {
@@ -42,8 +42,8 @@ const Register = () => {
     }
 
     const route = isAdminRoute
-      ? `https://backend-cjms.onrender.com/api/admin/register`
-      : `https://backend-cjms.onrender.com/api/register`;
+      ? `${api_url}/api/admin/register`
+      : `${api_url}/api/register`;
     // Prepare the request payload
     const data = {
       name: formData.firstName,
@@ -66,7 +66,7 @@ const Register = () => {
           setTimeout(() => {
             window.alert("Staff account created!");
             navigate("/admin/user");
-          }, 2000); 
+          }, 2000);
         } else {
           setTimeout(() => {
             window.location.href = "/login";

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 
 const Users = () => {
+  const api_url = import.meta.env.VITE_API_URL;
   const { users, staffs, fetchStaffs, fetchUsers, userRole } =
     useProductStore(); // Fetch userRole from the store
   const [showPopup, setShowPopup] = useState(false); // Popup state for success message
@@ -26,9 +27,8 @@ const Users = () => {
 
   const toggleActiveStatus = async (id) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/staff/toggle-active/${id}`);
+      const response = await axios.put(`${api_url}/api/staff/toggle-active/${id}`);
       if (response.status === 200) {
-        console.log(`Toggled active status for user with ID: ${id}`);
         fetchStaffs(); // Refresh the staff list after toggling
       } else {
         console.error("Failed to toggle active status");

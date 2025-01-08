@@ -5,12 +5,10 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("./middleware/auth");
-const upload = require("./middleware/upload");
 
 // Models
 const User = require("./models/User");
 const Staff = require("./models/Staff");
-const Product = require("./models/Product");
 
 // Initialize express app
 const app = express();
@@ -30,58 +28,24 @@ mongoose
 const userRoutes = require("./routes/userRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const registerRoutes = require("./routes/registerRoutes");
+const Product = require("./models/Product");
 
 // Routes setup
 app.use("/api/users", userRoutes); // User-related routes
 app.use("/api/staffs", staffRoutes); // Staff-related routes
 app.use("/api", registerRoutes); // Register-related routes
 
-// Serve uploaded files
-app.use("/uploads", express.static("uploads")); // Static files (like images) served from /uploads
 
-// POST /api/products - Create a new product
-app.post("/api/product", upload.single("product_image"), async (req, res) => {
-  try {
-    const {
-      product_name,
-      product_price,
-      product_id,
-      product_discount,
-      category,
-      best_seller,
-      featured,
-    } = req.body;
-
-    // Handle saving the product to the database
-    const product = new Product({
-      product_id,
-      product_name,
-      product_price,
-      product_discount,
-      product_image: req.file ? req.file.path : null, // Handle product image upload
-      sex: category,
-      best_seller: best_seller === "true", // Convert to boolean
-      featured: featured === "true", // Convert to boolean
-    });
-
-    await product.save();
-    console.log("Product saved successfully");
-    res.status(201).json({ message: "Product created successfully", product });
-  } catch (error) {
-    console.error("Error saving product:", error.message);
-    res.status(500).json({ error: "Error saving product: " + error.message });
-  }
-});
-
-// Get all products
-app.get("/api/products", async (req, res) => {
-  try {
-    const products = await Product.find(); // Fetch all products from DB
-    res.json(products); // Return the products as JSON
-  } catch (error) {
+app.get("/api/getall", async (req, res) => {
+  try{
+    const products = await Product.find({});
+    res.status(200).json(products);
+  }catch (error) {
     res.status(500).send("Error retrieving products: " + error.message);
   }
-});
+})
+
+
 
 // JWT token verification route (protected route example)
 app.get("/api/protected", authenticateToken, (req, res) => {

@@ -5,7 +5,6 @@ import { IoMdContact } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import Cart from "../header/cart/Cart.jsx";
-import { FaCaretDown } from "react-icons/fa";
 import useProductStore from "../store/ProductStore.js";
 
 const Header = () => {
@@ -16,6 +15,7 @@ const Header = () => {
 
   const { login, userRole, setLoginState, cartItems, fetchCartItems } =
     useProductStore();
+
 
   useEffect(() => {
     if (userRole) {
@@ -208,6 +208,8 @@ const Header = () => {
                     user: null,
                     userRole: null,
                   });
+                  localStorage.removeItem("cartItems");
+
                   navigate("/");
                 }}
               >
@@ -218,7 +220,7 @@ const Header = () => {
             {/* Contact Dropdown */}
             <div className="relative" ref={desktopDropdownRef}>
               <IoMdContact
-                className="cursor-pointer text-4xl"
+                className="cursor-pointer text-4xl "
                 onClick={toggleDesktopDropdown}
               />
               {!login && desktopDropdownVisible && (
@@ -363,7 +365,9 @@ const Header = () => {
                         token: null,
                         user: null,
                         userRole: null,
+
                       });
+                      localStorage.removeItem("cartItems");
                       navigate("/");
                     }}
                   >

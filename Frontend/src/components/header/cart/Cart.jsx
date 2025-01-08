@@ -15,6 +15,7 @@ const Cart = ({ handleCartClicked }) => {
     fetchCartItems();
   }, [fetchCartItems]);
 
+
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {
       setQuantity(Array(cartItems.length).fill(1));
@@ -28,6 +29,8 @@ const Cart = ({ handleCartClicked }) => {
       return updated;
     });
   };
+
+  
 
   const handleDecrement = (index) => {
     setQuantity((prev) => {

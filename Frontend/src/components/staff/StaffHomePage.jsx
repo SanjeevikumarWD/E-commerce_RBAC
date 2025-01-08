@@ -6,7 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const StaffHomePage = () => {
-  const API_URL = process.env.REACT_APP_API_URL;
+  const api_url = import.meta.env.VITE_API_URL;
+
   const { products, fetchProducts, userRole } = useProductStore();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -74,15 +75,13 @@ const StaffHomePage = () => {
     }
 
     try {
-      console.log(isEditMode);
       let response = await axios.post(
-        `https://backend-cjms.onrender.com/api/product`,
+        `${api_url}/api/product`,
         formDataToSend
       );
 
       // Check if the response is successful
       if (response.status === 200 || response.status === 201) {
-        console.log("Product updated/created successfully", response.data);
 
         setModalOpen(false); // Close modal
         setFormData({
@@ -107,7 +106,7 @@ const StaffHomePage = () => {
   // Handle delete product
   const handleDelete = async (productId) => {
     try {
-      await axios.delete(`https://backend-cjms.onrender.com/api/products/${productId}`);
+      await axios.delete(`${api_url}/api/products/${productId}`);
       fetchProducts(); // Refresh product list
     } catch (error) {
       console.error("Error deleting product:", error);

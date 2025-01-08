@@ -122,7 +122,7 @@ const Footer = () => {
       {/* Copyright Text */}
       <div className="text-center my-5">
         <p className="tracking-wider text-lg">
-          All Rights Reserved By @Saku Creation
+          Developed By <a href="https://sanjeevikumarwd.onrender.com/" className="underline">@Saku Creation</a>
         </p>
       </div>
     </div>

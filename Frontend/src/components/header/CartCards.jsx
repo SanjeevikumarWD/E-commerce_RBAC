@@ -3,12 +3,14 @@ import axios from "axios";
 import useProductStore from "../store/ProductStore";
 
 const CartCards = ({ imgSrc, title, price, userId, productId, quantity, increment, decrement }) => {
+  const api_url = import.meta.env.VITE_API_URL;
+
   const { fetchCartItems } = useProductStore();
 
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:3000/api/cart/remove",
+        `${api_url}/api/cart/remove`,
         {
           data: { userId, productId },
         }
@@ -17,7 +19,6 @@ const CartCards = ({ imgSrc, title, price, userId, productId, quantity, incremen
       if (response.data.success) {
         // Fetch updated cart items from the store
         fetchCartItems();
-        console.log("Item removed successfully, updated cart fetched");
       }
     } catch (error) {
       console.error("Error deleting product from cart:", error.message);
@@ -29,7 +30,7 @@ const CartCards = ({ imgSrc, title, price, userId, productId, quantity, incremen
   return (
     <div className="flex justify-between p-4 space-x-2 border-b-2 pb-3">
       <div className="h-[100px] border-2">
-        <img src={`http://localhost:3000/${imgSrc}`} alt="" className="w-full h-full" />
+        <img src={`${api_url}/${imgSrc}`} alt="" className="w-full h-full" />
       </div>
       <div className="flex-1 pr-3 font-thin">
         <p className="px-2 mb-5">{title}</p>
