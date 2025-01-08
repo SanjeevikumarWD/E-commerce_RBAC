@@ -87,34 +87,61 @@ const Footer = () => {
           <h1 className="font-semibold mb-3 text-2xl">CONTACT</h1>
 
           <div className="flex gap-6">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <CiTwitter />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiOutlineYoutube />
-            </a>
-            <a
-              href="mailto:someone@example.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IoMailOpenOutline />
-            </a>
+            <div className="relative group">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative"
+              >
+                <FaInstagram />
+              </a>
+              <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Dummy Instagram
+              </span>
+            </div>
+
+            <div className="relative group">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative"
+              >
+                <CiTwitter />
+              </a>
+              <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Dummy Twitter
+              </span>
+            </div>
+
+            <div className="relative group">
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative"
+              >
+                <AiOutlineYoutube />
+              </a>
+              <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Dummy YouTube
+              </span>
+            </div>
+
+            <div className="relative group">
+              <a
+                href="mailto:someone@example.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative"
+              >
+                <IoMailOpenOutline />
+              </a>
+              <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Dummy Email
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -122,7 +149,10 @@ const Footer = () => {
       {/* Copyright Text */}
       <div className="text-center my-5">
         <p className="tracking-wider text-lg">
-          Developed By <a href="https://sanjeevikumarwd.onrender.com/" className="underline">@Saku</a>
+          Developed By{" "}
+          <a href="https://sanjeevikumarwd.onrender.com/" className="underline">
+            @Saku
+          </a>
         </p>
       </div>
     </div>
