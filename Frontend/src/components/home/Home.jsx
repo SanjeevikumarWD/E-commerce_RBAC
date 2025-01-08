@@ -137,7 +137,7 @@ const Home = () => {
               className="w-full h-full object-cover rounded-md"
             />
             <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest"
-            onClick={() => navigate("/men")}
+            onClick={() => navigate("/shop")}
             >
               MEN
             </p>
@@ -150,7 +150,7 @@ const Home = () => {
               className="w-full h-full object-cover rounded-md"
             />
             <p className="absolute bottom-8 left-8 font-semibold text-white tracking-widest"
-            onClick={() => navigate("/women")}
+            onClick={() => navigate("/shop")}
             >
               WOMEN
             </p>
